@@ -4,7 +4,7 @@ services:
     build:
       context: .
       args:
-        - DEV=true
+        - DEV=true # since while developing, we are using this file, we set the DEV here as True
     ports:
       - "8080:8080"
     volumes:

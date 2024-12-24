@@ -1,6 +1,7 @@
 FROM python:3.9-alpine3.13
 LABEL maintainer="vincentjoyhere"
 
+# This blocks the output buffering and printed directly to the console, thus seeing the logs immediately
 ENV PYTHONUNBUFFERED=1
 
 COPY ./requirements.txt /tmp/requirements.txt

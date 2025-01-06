@@ -27,6 +27,8 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError('User must have an email address.')
         user = self.model(email=self.normalize_email(email), **extra_field)
+        # normalize_email is a functionality provided by BaseUserManager class
+        # **extra_field here represents, we can pass in extra key value pairs as arguments. Means if you have to pass extra fields (ex: name), then you don't need to modify the create_user method here
         user.set_password(password)
         user.save(using=self._db)
 
@@ -44,14 +46,17 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """User in the system"""
+    # AbstractBaseUser is used because it contains the functionalities for the authentication systems, but has no fields
+    # PermissionsMixin contains the functionalities for the permissions feature of django
+    # and it also contains any fields needed for that feature
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False) # decides whether user can log into the admin page or not
 
-    objects = UserManager()
+    objects = UserManager() # This is how you assign a user manager to a a model in django
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'email' # defines the field that we want to use for authentication. Replacing the username default field that comes with the default user model to our custom email field.
 
 
 class Recipe(models.Model):

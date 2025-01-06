@@ -5,6 +5,10 @@ from decimal import Decimal
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
+# get_user_model helper function by Django gives the default use model of the project.
+# This is the best practise instead of directly refering the models we create
+# That way any changes to the modesl we create will be reflected here automatically
+
 from core import models
 
 
@@ -43,6 +47,7 @@ class ModelTests(TestCase):
     def test_new_user_without_email_raises_error(self):
         """Test that creating a new user without an email raises a ValueError."""
         with self.assertRaises(ValueError):
+            # We need to get a ValueError if incorrect value is given for email
             get_user_model().objects.create_user('', 'test123')
 
     def test_create_superuser(self):

@@ -2,9 +2,9 @@
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _ # future proofing for later possible translations
 
-from core import models
+from core import models # imports all the custom models we want to register in admin
 
 
 class UserAdmin(BaseUserAdmin):
@@ -28,7 +28,7 @@ class UserAdmin(BaseUserAdmin):
     readonly_fields = ['last_login']
     add_fieldsets = (
         (None, {
-            'classes': ('wide',),
+            'classes': ('wide',), # wide is a custom css class to make the admin ui clean and neat
             'fields': (
                 'email',
                 'password1',

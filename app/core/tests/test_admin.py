@@ -9,7 +9,7 @@ from django.test import Client
 class AdminSiteTests(TestCase):
     """Tests for Django admin"""
 
-    def setUp(self):
+    def setUp(self): # This method will get called before any tests are run
         """Create user and client"""
         self.client = Client()
         self.admin_user = get_user_model().objects.create_superuser(
@@ -26,7 +26,7 @@ class AdminSiteTests(TestCase):
     def test_users_list(self):
         """Test that users are listed on page."""
         url = reverse('admin:core_user_changelist')
-        res = self.client.get(url)
+        res = self.client.get(url) # Because we've forced login an admin_user at line 19, in setUp method, this client will get the user list of that admin user, which is Test User in this case
 
         self.assertContains(res, self.user.name)
         self.assertContains(res, self.user.email)

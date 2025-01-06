@@ -56,7 +56,7 @@ class ModelTests(TestCase):
             'test@example.com',
             'test123',
         )
-        self.assertTrue(user.is_superuser)
+        self.assertTrue(user.is_superuser) # is_superuser is provided by PermissionsMixin
         self.assertTrue(user.is_staff)
 
     def test_create_recipe(self):

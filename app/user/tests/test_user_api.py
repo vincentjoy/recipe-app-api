@@ -8,7 +8,7 @@ from rest_framework.test import APIClient
 from rest_framework import status
 
 
-CREATE_USER_URL = reverse('user:create')
+CREATE_USER_URL = reverse('user:create') # this can be mapped, because in the urls.py file in user app, the 'app_name' is given as 'user' and urlpatters->path->name is given as 'create'
 TOKEN_URL = reverse('user:token')
 ME_URL = reverse('user:me')
 
@@ -36,7 +36,7 @@ class PublicUserApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         user = get_user_model().objects.get(email=payload['email'])
         self.assertTrue(user.check_password(payload['password']))
-        self.assertNotIn('password', res.data)
+        self.assertNotIn('password', res.data) # checks whether password is not send back in the response object
 
     def test_user_with_email_exists_error(self):
         """Test error returned if user with email exists"""

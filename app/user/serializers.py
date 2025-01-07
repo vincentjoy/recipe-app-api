@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['email', 'password', 'name']
         extra_kwargs = {'password': {'write_only': True, 'min_length': 5}}
 
-    def create(self, validated_data):
+    def create(self, validated_data): # create method will only get called after the validation of the iput data, for example min_length check in line 18
         """Create and return a user with encrypted password."""
         return get_user_model().objects.create_user(**validated_data)
 

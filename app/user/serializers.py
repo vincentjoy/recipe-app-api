@@ -33,7 +33,7 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class AuthTokenSerializer(serializers.Serializer):
+class AuthTokenSerializer(serializers.Serializer): # we are using a normal serializer subclassing instead of ModelSerializer (like in UserSerializer), because we are not basing this serializer on any model
     """Serializer for the user auth token."""
     email = serializers.EmailField()
     password = serializers.CharField(
@@ -41,7 +41,7 @@ class AuthTokenSerializer(serializers.Serializer):
         trim_whitespace=False,
     )
 
-    def validate(self, attrs):
+    def validate(self, attrs): # this validate method will get called at the validation stage by the view
         """Validate and authenticate the user."""
         email = attrs.get('email')
         password = attrs.get('password')
@@ -49,7 +49,7 @@ class AuthTokenSerializer(serializers.Serializer):
             request=self.context.get('request'),
             username=email,
             password=password,
-        )
+        ) # at this step, DRF will check for existing users with the email and password and returns the user if the inputs are valid
         if not user:
             msg = _('Unable to authenticate with provided credentials.')
             raise serializers.ValidationError(msg, code='authorization')

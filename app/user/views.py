@@ -18,7 +18,7 @@ class CreateUserView(generics.CreateAPIView):
 class CreateTokenView(ObtainAuthToken):
     """Create a new auth token for user."""
     serializer_class = AuthTokenSerializer
-    renderer_class = api_settings.DEFAULT_RENDERER_CLASSES
+    renderer_class = api_settings.DEFAULT_RENDERER_CLASSES # this makes this view available in browsable api
 
 
 class ManageUserView(generics.RetrieveUpdateAPIView):

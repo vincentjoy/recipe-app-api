@@ -59,11 +59,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email' # defines the field that we want to use for authentication. Replacing the username default field that comes with the default user model to our custom email field.
 
 
-class Recipe(models.Model):
+class Recipe(models.Model): # this is a simple subclass if models.Model, not anything like User model above, becasue this is a simple vanilla class
     """Recipe object."""
-    user = models.ForeignKey(
+    user = models.ForeignKey( # this sets a relationship between reipe and user. Means every recipe will have a user
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
+        on_delete=models.CASCADE, # means, if the corresponding user is deleted, his recipes also will get deleted
     )
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
@@ -75,7 +75,7 @@ class Recipe(models.Model):
     image = models.ImageField(null=True, upload_to=recipe_image_file_path)
 
     def __str__(self):
-        return self.title
+        return self.title # this indicates how this model is displayed in django admin
 
 
 class Tag(models.Model):

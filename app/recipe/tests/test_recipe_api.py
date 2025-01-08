@@ -84,7 +84,7 @@ class PrivateRecipeApiTests(TestCase):
 
         res = self.client.get(RECIPES_URL)
 
-        recipes = Recipe.objects.all().order_by('-id')
+        recipes = Recipe.objects.all().order_by('-id') # returns all the recipes in the data base
         serializer = RecipeSerializer(recipes, many=True)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
@@ -92,12 +92,12 @@ class PrivateRecipeApiTests(TestCase):
     def test_recipe_list_limited_to_user(self):
         """Test list of recipes is limited to authenticated user."""
         other_user = create_user(email='other@example.com', password='test123')
-        create_recipe(user=other_user)
-        create_recipe(user=self.user)
+        create_recipe(user=other_user) # creating recipe for the new user
+        create_recipe(user=self.user) # creating recipe for the authenticated user in the setup method
 
-        res = self.client.get(RECIPES_URL)
+        res = self.client.get(RECIPES_URL) # returns the recipe of authenticated user only
 
-        recipes = Recipe.objects.filter(user=self.user)
+        recipes = Recipe.objects.filter(user=self.user) # returns all the recipes for the self.user (which is the same user authenticated in the setup)
         serializer = RecipeSerializer(recipes, many=True)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)

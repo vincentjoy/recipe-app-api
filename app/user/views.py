@@ -21,7 +21,7 @@ class CreateTokenView(ObtainAuthToken):
     renderer_class = api_settings.DEFAULT_RENDERER_CLASSES # this makes this view available in browsable api
 
 
-class ManageUserView(generics.RetrieveUpdateAPIView):
+class ManageUserView(generics.RetrieveUpdateAPIView): # RetrieveUpdateAPIView is needed because this is a get/put/path API
     """Manage the authenticated user."""
     serializer_class = UserSerializer
     authentication_classes = [authentication.TokenAuthentication]

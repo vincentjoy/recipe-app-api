@@ -9,7 +9,7 @@ from django.utils.translation import gettext as _
 from rest_framework import serializers
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer): # same serializer is used for registering/creating a user and updating the user
     """Serializer for the user object."""
 
     class Meta:
@@ -23,10 +23,13 @@ class UserSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         """Update and return user."""
-        password = validated_data.pop('password', None)
+        password = validated_data.pop('password', None) # defaulting to none, because user may not be updating the password and hence it can be empty
         user = super().update(instance, validated_data)
 
         if password:
+            # here we takes the retrieved password from the validated data in the above step
+            # if not, in the update process, the new password will get saved as it is, in human readable form
+            # so to avoid that, we use the set_password method to hash it before storing it
             user.set_password(password)
             user.save()
 

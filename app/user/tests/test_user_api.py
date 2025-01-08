@@ -142,7 +142,7 @@ class PrivateUserApiTests(TestCase):
 
         res = self.client.patch(ME_URL, payload)
 
-        self.user.refresh_from_db()
+        self.user.refresh_from_db() # This is necessary to refresh the user details in db, just triggering the patch method won't be suffice for this
         self.assertEqual(self.user.name, payload['name'])
         self.assertTrue(self.user.check_password(payload['password']))
         self.assertEqual(res.status_code, status.HTTP_200_OK)

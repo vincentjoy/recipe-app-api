@@ -27,7 +27,7 @@ class TagSerializer(serializers.ModelSerializer):
         read_only_fields = ['id']
 
 
-class RecipeSerializer(serializers.ModelSerializer):
+class RecipeSerializer(serializers.ModelSerializer): # Using model serializer here because this serializing is going to represent a specific model
     """Serializer for recipes."""
     tags = TagSerializer(many=True, required=False)
     ingredients = IngredientSerializer(many=True, required=False)
@@ -88,7 +88,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         return instance
 
 
-class RecipeDetailSerializer(RecipeSerializer):
+class RecipeDetailSerializer(RecipeSerializer): # RecipeSerializer is the base class because we want all the functionalities and fields of RecipeSerializer, plus some additional fields, thus avoiding code duplication
     """Serializer for recipe detail view."""
 
     class Meta(RecipeSerializer.Meta):

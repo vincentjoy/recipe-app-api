@@ -28,7 +28,7 @@ from recipe.serializers import (
 RECIPES_URL = reverse('recipe:recipe-list')
 
 
-def detail_url(recipe_id):
+def detail_url(recipe_id): # recipe details url is a function (instead of a varibale like 'RECIPES_URL' above), because the recipe_id is different each time.
     """Create and return a recipe detail URL."""
     return reverse('recipe:recipe-detail', args=[recipe_id])
 
@@ -109,7 +109,7 @@ class PrivateRecipeApiTests(TestCase):
         url = detail_url(recipe.id)
         res = self.client.get(url)
 
-        serializer = RecipeDetailSerializer(recipe)
+        serializer = RecipeDetailSerializer(recipe) # This is what serializer does, decode or encode data, like the JSONDecoder() in Swift
         self.assertEqual(res.data, serializer.data)
 
     def test_create_recipe(self):
@@ -193,7 +193,7 @@ class PrivateRecipeApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
         self.assertFalse(Recipe.objects.filter(id=recipe.id).exists())
 
-    def test_recipe_other_users_recipe_error(self):
+    def test_delete_other_users_recipe_error(self):
         """Test trying to delete another users recipe gives error."""
         new_user = create_user(email='user2@example.com', password='test123')
         recipe = create_recipe(user=new_user)

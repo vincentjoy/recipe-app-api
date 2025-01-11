@@ -66,17 +66,17 @@ class RecipeViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(ingredients__id__in=ingredient_ids)
 
         return queryset.filter(
-            user=self.request.user
+            user=self.request.user # because we have metioned authentication as token nauthentication and permission as is_authenticated (line 49, 50), we can filter the recipes only of the current logged in user's
         ).order_by('-id').distinct()
 
-    def get_serializer_class(self):
+    def get_serializer_class(self): # this is method getting called by DRF every time to determine which class to use for serializer
         """Return the serializer class for request."""
         if self.action == 'list':
             return serializers.RecipeSerializer
         elif self.action == 'upload_image':
             return serializers.RecipeImageSerializer
 
-        return self.serializer_class
+        return self.serializer_class # else RecipeDetailSerializer will be returned for all the other cases, like - creating, updating and deleting recipe
 
     def perform_create(self, serializer):
         """Create a new recipe."""

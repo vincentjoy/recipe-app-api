@@ -199,7 +199,7 @@ class PrivateRecipeApiTests(TestCase):
         recipe = create_recipe(user=new_user)
 
         url = detail_url(recipe.id)
-        res = self.client.delete(url)
+        res = self.client.delete(url) # new_user is created at line 198, but it never is authenticated. The authenticated user is the self.user only, who is authenticated at the setup function. So this step won't pass because self.user is trying to delete a recipe which is created by new_user
 
         self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
         self.assertTrue(Recipe.objects.filter(id=recipe.id).exists())
@@ -212,7 +212,7 @@ class PrivateRecipeApiTests(TestCase):
             'price': Decimal('2.50'),
             'tags': [{'name': 'Thai'}, {'name': 'Dinner'}],
         }
-        res = self.client.post(RECIPES_URL, payload, format='json')
+        res = self.client.post(RECIPES_URL, payload, format='json') # because we're providing nested objects in the payload, we want to set format equals json.
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         recipes = Recipe.objects.filter(user=self.user)
@@ -260,7 +260,7 @@ class PrivateRecipeApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         new_tag = Tag.objects.get(user=self.user, name='Lunch')
-        self.assertIn(new_tag, recipe.tags.all())
+        self.assertIn(new_tag, recipe.tags.all()) # since we are using recipe.tags.all(), which will fetch the latest tags, we don't need to call refresh_from_db() anymore
 
     def test_update_recipe_assign_tag(self):
         """Test assigning an existing tag when updating a recipe."""

@@ -70,7 +70,7 @@ class Recipe(models.Model): # this is a simple subclass if models.Model, not any
     time_minutes = models.IntegerField()
     price = models.DecimalField(max_digits=5, decimal_places=2)
     link = models.CharField(max_length=255, blank=True)
-    tags = models.ManyToManyField('Tag')
+    tags = models.ManyToManyField('Tag') # it's a many to many filed, because any of the tags can be associated to any of the tags and vice versa
     ingredients = models.ManyToManyField('Ingredient')
     image = models.ImageField(null=True, upload_to=recipe_image_file_path)
 

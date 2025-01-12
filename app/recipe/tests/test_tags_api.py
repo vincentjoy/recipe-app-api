@@ -56,8 +56,8 @@ class PrivateTagsApiTests(TestCase):
 
         res = self.client.get(TAGS_URL)
 
-        tags = Tag.objects.all().order_by('-name')
-        serializer = TagSerializer(tags, many=True)
+        tags = Tag.objects.all().order_by('-name') #'-name' indicated tags ordered in the ascending order of the name
+        serializer = TagSerializer(tags, many=True) # many=True is needed to srialize an array of objects
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
 
@@ -70,7 +70,7 @@ class PrivateTagsApiTests(TestCase):
         res = self.client.get(TAGS_URL)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(res.data), 1)
+        self.assertEqual(len(res.data), 1) # the count is 1 here because we are not expecting the taf of user2 to be returned, because only authenticated user's (which is self.user) will be returned
         self.assertEqual(res.data[0]['name'], tag.name)
         self.assertEqual(res.data[0]['id'], tag.id)
 

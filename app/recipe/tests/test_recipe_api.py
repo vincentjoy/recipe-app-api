@@ -4,7 +4,7 @@ from decimal import Decimal
 import tempfile
 import os
 
-from PIL import Image
+from PIL import Image # this is the Pillow image library
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase

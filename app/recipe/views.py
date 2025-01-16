@@ -73,7 +73,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         """Return the serializer class for request."""
         if self.action == 'list':
             return serializers.RecipeSerializer
-        elif self.action == 'upload_image':
+        elif self.action == 'upload_image': # this is a custom action, defined in line 85
             return serializers.RecipeImageSerializer
 
         return self.serializer_class # else RecipeDetailSerializer will be returned for all the other cases, like - creating, updating and deleting recipe
@@ -83,6 +83,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
     @action(methods=['POST'], detail=True, url_path='upload-image')
+    # adding a custoum action using the action decorator provided by DRF
+    # details=True means, this action is only applicable to the detail section of this model view set, means url will be with 'id'
     def upload_image(self, request, pk=None):
         """Upload an image to recipe."""
         recipe = self.get_object()

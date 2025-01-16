@@ -1,7 +1,7 @@
 """Database models"""
 
 import uuid
-import os
+import os # need for some file path management system
 
 from django.conf import settings
 from django.db import models
@@ -16,7 +16,7 @@ def recipe_image_file_path(instance, filename):
     ext = os.path.splitext(filename)[1]
     filename = f'{uuid.uuid4()}{ext}'
 
-    return os.path.join('uploads', 'recipe', filename)
+    return os.path.join('uploads', 'recipe', filename) # this will make sure that the path is created in the appropriate directory based on the OS running the code
 
 
 class UserManager(BaseUserManager):

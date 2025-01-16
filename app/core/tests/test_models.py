@@ -1,5 +1,6 @@
 """Test for models"""
 
+from unittest.mock import patch
 from decimal import Decimal
 
 from django.test import TestCase
@@ -92,7 +93,7 @@ class ModelTests(TestCase):
 
         self.assertEqual(str(ingredient), ingredient.name)
 
-    @patch('core.models.uuid.uuid4')
+    @patch('core.models.uuid.uuid4') # This creates a patch for uuid, so that we can use mock uuid to generate image upload url path
     def test_recipe_file_name_uuid(self, mock_uuid):
         """Test generating image path."""
         uuid = 'test-uuid'

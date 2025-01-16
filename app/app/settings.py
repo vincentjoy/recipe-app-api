@@ -132,11 +132,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/static/'
-MEDIA_URL = '/static/media/'
+STATIC_URL = '/static/static/' # static files are generated on build time - like css, javascript files and static images
+MEDIA_URL = '/static/media/' # web browser url to access files
 
-MEDIA_ROOT = '/vol/web/media'
-STATIC_ROOT = '/vol/web/static'
+MEDIA_ROOT = '/vol/web/media' # media files are updated on run time, like user uploaded images or documents
+STATIC_ROOT = '/vol/web/static' # actual root on the file systems in the server that is used to store the files
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -149,6 +149,6 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
-SPECTACULAR_SETTINGS = {
+SPECTACULAR_SETTINGS = { # this setting is required tto upload images through browsable user interface
     'COMPONENT_SPLIT_REQUEST': True,
 }

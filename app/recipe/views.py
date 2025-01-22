@@ -40,8 +40,6 @@ from recipe import serializers
         ]
     )
 )
-
-
 class RecipeViewSet(viewsets.ModelViewSet):
     """View for manage recipe APIs."""
     serializer_class = serializers.RecipeDetailSerializer
@@ -67,7 +65,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
         return queryset.filter(
             user=self.request.user # because we have metioned authentication as token nauthentication and permission as is_authenticated (line 49, 50), we can filter the recipes only of the current logged in user's
-        ).order_by('-id').distinct()
+        ).order_by('-id').distinct() # distinct to avoid duplicate values, coz several tags and ingredients can have same recipe
 
     def get_serializer_class(self): # this is method getting called by DRF every time to determine which class to use for serializer
         """Return the serializer class for request."""
@@ -108,8 +106,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
         ]
     )
 )
-
-
 class BaseRecipeAttrViewSet(mixins.DestroyModelMixin,
                             mixins.UpdateModelMixin,
                             mixins.ListModelMixin,

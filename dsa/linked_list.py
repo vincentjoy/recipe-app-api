@@ -1,4 +1,4 @@
-class Node:
+class ListNode:
     def __init__(self, value):
         self.value = value
         self.next = None
@@ -19,7 +19,7 @@ class LinkedList:
 
     def append(self, value):
         """Add element to the end of the list."""
-        new_node = Node(value)
+        new_node = ListNode(value)
 
         if self.is_empty:
             self.head = new_node
@@ -31,7 +31,7 @@ class LinkedList:
 
     def prepend(self, value):
         """Add element to the beginning of the list."""
-        new_node = Node(value)
+        new_node = ListNode(value)
 
         if self.is_empty:
             self.head = new_node
@@ -54,7 +54,7 @@ class LinkedList:
             self.append(value)
             return
 
-        new_node = Node(value)
+        new_node = ListNode(value)
         current = self.head
         previous = None
         current_index = 0

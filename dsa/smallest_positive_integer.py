@@ -17,26 +17,29 @@
 def find_smallest_missing_positive(arr):
     n = len(arr)
 
-    # Step 1: Ignore negative and zero numbers
-    for i in range(n):
-        if arr[i] <= 0:
-            arr[i] = n + 1
+    # Step 1: Place each number at its correct position
+    i = 0
+    while i < n:
+        # correct position for number k is k-1 index
+        correct_pos = arr[i] - 1
 
-    # Step 2: Mark the presence of each number in array
-    for i in range(n):
-        num = abs(arr[i])
-        if num <= n:
-            arr[num - 1] = -abs(arr[num - 1])
+        # Check if current number is positive and within range
+        # and not already at its correct position
+        if 0 < arr[i] <= n and arr[i] != arr[correct_pos]:
+            # Swap numbers
+            arr[i], arr[correct_pos] = arr[correct_pos], arr[i]
+        else:
+            i += 1
 
-    # Step 3: Find first positive number
+    # Step 2: Find first number that's not at correct position
     for i in range(n):
-        if arr[i] > 0:
+        if arr[i] != i + 1:
             return i + 1
 
     # If all numbers from 1 to n exist
     return n + 1
 
-# Example usage
+# Example usage and test cases
 test_cases = [
     [2, 3, -7, 6, 8, 1, -10, 15],
     [1, 1, 0, -1, -2],
